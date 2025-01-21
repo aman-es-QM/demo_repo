@@ -1,0 +1,76 @@
+﻿
+@model List<demo_.Models.Entity.Student>
+@{
+
+    var nameSort = ViewData["NameSortParm"] as string;
+    var emailSort = ViewData["EmailSortParm"] as string;
+}
+
+
+<H1> Admin Dashboard</H1>
+<div class="row">
+    <div class="col-md-6">
+        <form method="get" asp-action="List" asp-controller="Student">
+            <input name="Search" type="search" placeholder="search"> 
+            <button class="btn btn-dark" type="submit" asp-action="List" asp-controller="Student">Search By Name</button>
+            <a href="@Url.Action("List", new { sort = nameSort })" class="btn btn-link">
+                @if (nameSort == "name_desc")
+                {
+                    <span>↑ Name</span>
+                }
+                else
+                {
+                    <span>↓ Name</span>
+                }
+            </a>
+            <a href="@Url.Action("List", new { sort = emailSort })" class="btn btn-link">
+                @if (emailSort == "email_desc")
+                {
+                    <span>↑ Email</span>
+                }
+                else
+                {
+                    <span>↓ Email</span>
+                }
+            </a>
+        </form>
+    </div>
+    <div class=" col-md-6">
+        <a asp-action="List" asp-controller="Student">Back to full list</a>
+
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>SL NO</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Password</th>
+            <th>Created Date</th>
+            <th>Updated Date</>
+
+        </tr>
+    </thead>
+    <tbody> 
+        @foreach (var student in Model.Select((student, index) => new { Student = student, Index = index + 1 }))
+        {
+            <tr>
+                <td>@student.Index</td> <!-- Serial number -->
+                <td>@student.Student.name</td>
+                <td>@student.Student.email</td>
+                <td>@student.Student.phone</td>
+                <td>@student.Student.Role</td>
+                <td>@student.Student.Password</td>
+                <td>@student.Student.CreatedAt</td>
+                <td>@student.Student.UpdatedAt</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Student" asp-action="Edit" asp-route-id="@student.Student.id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> 
+<a class="btn btn-primary" href="@Url.Action("Add", "Student")">Add New Students</a>

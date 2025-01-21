@@ -1,0 +1,38 @@
+﻿@model demo_.Models.Entity.Student
+
+<h1>Student Details</h1>
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SL NO</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Password</th>
+                <th>Created Date</th>
+                <th>Updated Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td> <!-- Only one student, so index is fixed -->
+                <td>@Model.name</td>
+                <td>@Model.email</td>
+                <td>@Model.phone</td>
+                <td>@Model.Role</td>
+                <td>@Model.Password</td>
+                <td>@Model.CreatedAt.ToString("yyyy-MM-dd")</td>
+                <td>@Model.UpdatedAt.ToString("yyyy-MM-dd")</td>
+            </tr>
+        </tbody>
+    </table>
+}
+else 
+{
+    <p>No student found with the given ID.</p>
+}
+<a class="btn btn-primary" href="@Url.Action("Edit", "Student", new {id = Model.id})">Edit Profile</a>
